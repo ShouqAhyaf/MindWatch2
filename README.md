@@ -1,4 +1,4 @@
-# 🧠 MindWatch: Multimodal Physiological Signal Fusion for Drug-Resistant Epilepsy Prediction A Machine Learning Framework
+# 🧠 MindWatch: Multimodal Physiological Signal Fusion for Drug-Resistant Epilepsy Prediction Using Deep Learning
 
 Deep learning-based multimodal seizure prediction framework using EEG, ECG, EMG, and motion signals collected from wearable monitoring systems. The project focuses on improving seizure prediction performance using deep learning techniques for spatial and temporal physiological pattern learning.
 
