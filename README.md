@@ -1,90 +1,154 @@
-# MindWatch2
+# 🧠 MindWatch: Multimodal Physiological Signal Fusion for Drug-Resistant Epilepsy Prediction A Machine Learning Framework
+Epilepsy Prediction
 
-Deep learning-based multimodal seizure prediction framework using EEG, ECG, EMG, and motion signals collected from wearable monitoring systems.
+Deep learning-based multimodal seizure prediction framework using EEG, ECG, EMG, and motion signals collected from wearable monitoring systems.  
+The project focuses on improving seizure prediction performance using deep learning techniques for spatial and temporal physiological pattern learning.
 
-## Project Overview
+---
 
-This project proposes an end-to-end multimodal deep learning pipeline designed to improve seizure prediction performance by integrating multiple physiological modalities instead of relying only on EEG signals.
+## 🔗 Demo
 
-The framework combines:
+[Open Project Demo](https://mindwatch-main-neon.vercel.app/)
 
-* CNN-based spatial feature extraction
-* BiLSTM temporal modeling
-* Multimodal fusion
-* Class imbalance handling strategies
+---
 
-The system predicts three states:
+## 👥 Project Team
 
-* Normal
-* Preictal
-* Ictal
+- [Shouq Ahyaf](https://github.com/ShouqAhyaf)
+- [Jori Baaljahr](https://github.com/jorifahad)
+- [Renad Alharbi](https://github.com/RenadAlharbi27)
+- [Jood Khamjan](https://github.com/imrealjo37)
+- [Jana Alharbi](https://github.com/Jejee777)
 
-## Methodology
+---
 
-The proposed pipeline consists of several stages:
+# 📡 Sensors and Physiological Signals
 
-### 1. Data Preprocessing
+The framework integrates multiple physiological modalities acquired from wearable systems:
 
-Signal preprocessing was applied to improve signal quality and maintain synchronization between modalities.
+- EEG (Electroencephalography)
+- ECG (Electrocardiography)
+- EMG (Electromyography)
+- Motion Signals
 
-Processing steps include:
+<p align="center">
+  <img src="Image/sensor_dot.png" width="700"/>
+</p>
 
-* Notch filtering
-* Band-pass filtering
-* Artifact reduction
-* Windowing (4-second windows)
+---
 
-Additional modality-specific preprocessing was applied for EEG, ECG, EMG, and motion signals.
+# ⚙️ Proposed Methodology
 
-### 2. Class Imbalance Control
+The proposed pipeline includes preprocessing, imbalance handling, deep feature extraction, temporal modeling, and evaluation stages.
 
-To improve minority-class learning and reduce bias toward normal samples, multiple imbalance control strategies were implemented:
+<p align="center">
+  <img src="Image/Methodology.png" width="700"/>
+</p>
 
-* Excluding runs without EEG recordings
-* Zero-padding missing modalities
-* Excluding IMPD periods
-* Limiting normal recordings
-* Weighted Random Sampling (WRS)
-* LDAM-DRW optimization
+---
 
-### 3. Deep Feature Extraction
+# 🧩 Deep Learning Architecture
 
-Multimodal CNN architectures were used to automatically extract spatial features from physiological signals.
+## CNN-Based Spatial Feature Extraction
 
-### 4. Temporal Modeling
+CNN models were utilized to automatically learn spatial representations and hidden physiological patterns from multimodal signals.
 
-BiLSTM networks were utilized to capture temporal dependencies and sequential seizure-related patterns.
+<p align="center">
+  <img src="Image/CNN_Architectural.jpg" width="700"/>
+</p>
 
-### 5. Evaluation
+---
 
-The framework was evaluated using subject-independent validation strategies and multiple performance metrics.
+## BiLSTM Temporal Modeling
 
-## Repository Contents
+BiLSTM networks were used to capture temporal dependencies and seizure-related sequential patterns across time windows.
 
-* `PREPROCESS.IPYNB`
-  Signal preprocessing pipeline.
+<p align="center">
+  <img src="Image/BiLSTM_Architectural.jpg" width="700"/>
+</p>
 
-* `HandCraft_AllModalities.IPYNB`
-  Handcrafted feature extraction experiments.
+---
 
-* `CNN_AllModalities.IPYNB`
-  Multimodal CNN experiments.
+# ⚖️ Class Imbalance Control
 
-* `CNN_EEGonly.IPYNB`
-  EEG-only CNN experiments.
+To improve seizure-state learning and reduce model bias, imbalance handling was applied at two complementary levels.
 
-* `BiLSTM*_Result`
-  BiLSTM training and evaluation experiments using different configurations and imbalance strategies.
+## 📊 Data-Level Imbalance Control
 
-## Technologies Used
+Several preprocessing strategies were implemented, including:
 
-* Python
-* PyTorch
-* NumPy
-* Pandas
-* Scikit-learn
-* MNE
+- Excluding recordings without valid EEG signals
+- Limiting normal recordings
+- Removing IMPD/device adjustment periods
+- Retaining seizure-related runs
+- Zero-padding missing modalities
 
-## Notes
+These steps improved minority-class representation and enhanced data consistency across modalities.
 
-This repository contains implementation files, experimental notebooks, and project-related results for the proposed multimodal seizure prediction framework.
+---
+
+## 🧠 Model-Level Imbalance Control
+
+Multiple imbalance-aware learning strategies were evaluated:
+
+- Weighted Cross-Entropy (WCE)
+- Focal Loss
+- LDAM
+- LDAM-DRW + Weighted Random Sampling (WRS)
+
+### Experimental Notebooks
+
+- `BiLSTM5+6_WCE + Focal.IPYNB`
+- `BiLSTM7_LDAM.IPYNB`
+- `BiLSTM1_LDAM-DRW + WRS.IPYNB`
+- `BiLSTM2_LDAM-DRW + WRS.IPYNB`
+- `BiLSTM3_LDAM-DRW + WRS.IPYNB`
+- `BiLSTM4_LDAM-DRW + WRS.IPYNB`
+
+The best overall performance was achieved using **LDAM-DRW combined with Weighted Random Sampling (WRS)**.
+
+---
+
+# 📈 Experimental Configurations
+
+Multiple BiLSTM configurations were tested to optimize temporal modeling performance.
+
+| Configuration | Balanced Accuracy | Macro F1-score | FPR (Pre-ictal) |
+|---|---|---|---|
+| Configuration 1 | 0.9762 | 0.8775 | 0.0386 |
+| Configuration 2 | 0.9776 | 0.8798 | 0.0357 |
+| Configuration 3 | 0.9774 | 0.8751 | 0.0366 |
+| ⭐ Configuration 4 | **0.9799** | **0.8970** | **0.0323** |
+
+Configuration 4 achieved the best overall performance among all evaluated settings.
+
+---
+
+# 📂 Repository Contents
+
+| File / Folder | Description |
+|---|---|
+| `PREPROCESS.IPYNB` | Signal preprocessing pipeline |
+| `HandCraft_AllModalities.IPYNB` | Handcrafted feature extraction |
+| `CNN_AllModalities.IPYNB` | Multimodal CNN experiments |
+| `CNN_EEGonly.IPYNB` | EEG-only experiments |
+| `BiLSTM*_Result` | BiLSTM training and evaluation results |
+| `CNN_Result` | CNN model outputs |
+| `Image` | Project figures and methodology illustrations |
+
+---
+
+# 🛠️ Technologies Used
+
+- Python
+- PyTorch
+- NumPy
+- Pandas
+- Scikit-learn
+- MNE
+
+---
+
+# 🎯 Project Goal
+
+Developing a robust multimodal seizure prediction framework capable of improving seizure-state detection while reducing false alarms for potential real-world healthcare applications.
